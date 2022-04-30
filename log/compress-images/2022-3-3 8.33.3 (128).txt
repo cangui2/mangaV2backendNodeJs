@@ -1,0 +1,157 @@
+File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: File from: [src/img/**/*.{jpg,JPG,jpeg,JPEG}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: 
