@@ -169,6 +169,7 @@ exports.login =async (req, res) => {
     // Our login logic starts here
     try {
         // Get user input
+        console.log(req.body)
         const { email, password } = req.body;
 
         // Validate user input
@@ -180,21 +181,24 @@ exports.login =async (req, res) => {
 
         if (user && (await bcrypt.compare(password, user.password))) {
             // Create token
-            const token = jwt.sign(
-                { user_id: user._id, email },
+            console.log('token')
+            // save user token
+            user.token = jwt.sign(
+                {user_id: user._id, email},
                 process.env.TOKEN_KEY,
                 {
                     expiresIn: "2h",
                 }
             );
 
-            // save user token
-            user.token = token;
-
             // user
-            res.status(200).json(user);
+            return res
+                .status(200)
+                .json(user);
         }
-        res.status(400).send("Invalid Credentials");
+        return res
+            .status(400)
+            .send("Invalid Credentials");
     } catch (err) {
         console.log(err);
     }

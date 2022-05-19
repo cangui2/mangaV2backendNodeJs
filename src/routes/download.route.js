@@ -6,7 +6,9 @@ const downloadController =require('../controllers/dowload.controller.js');
 
 
 router.get('/download/:name/:episode/:lastepisode',downloadController.download);
-router.get('/compress',downloadController.compress);
+router.get('/download/:name/:episode/:code1/:code2',downloadController.download2);
+router.get('/compress/:name/:episode',downloadController.compress);
 router.get('/remove/:name/:episode/',downloadController.remove);
+router.get('/check/:name/:episode/',downloadController.checkIsExiste);
 
 module.exports =router;

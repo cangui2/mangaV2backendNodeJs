@@ -4,13 +4,13 @@ require("dotenv").config();
 const bcrypt=require('bcryptjs')
 const cors = require("cors");
 const fs = require('fs');
-var privateKey = fs.readFileSync( '/opt/tinycp/domains/serv.canguidev.fr/ssl/ssl-letsencrypt.key' );
-var certificate = fs.readFileSync( '/opt/tinycp/domains/serv.canguidev.fr/ssl/ssl-letsencrypt.crt' );
+// var privateKey = fs.readFileSync( '/opt/tinycp/domains/serv.canguidev.fr/ssl/ssl-letsencrypt.key' );
+// var certificate = fs.readFileSync( '/opt/tinycp/domains/serv.canguidev.fr/ssl/ssl-letsencrypt.crt' );
 //
 //
 
 
-var credentials = {key: privateKey, cert: certificate};
+//var credentials = {key: privateKey, cert: certificate};
 
 
 
@@ -18,8 +18,8 @@ var credentials = {key: privateKey, cert: certificate};
 
 // creation de express app
 
-//const app = express();
-const app = express(credentials);
+const app = express();
+//const app = express(credentials);
 app.use(cors());
 // setup des port
 
@@ -55,18 +55,19 @@ mongoose.Promise=global.Promise;
 
 // connect database
 
-// mongoose.connect(dbConfig.url).then((client)=>{
-//     console.log("succes db connect")
-//
-// }).catch(err =>{
-//     console.log("erreur connect")
-//     process.exit();
-// })
-async function main() {
-    await mongoose.connect('mongodb://AdminSammy:GHT30k7!@localhost:27017/admin');
-}
-main().catch(err => console.log(err));
-// require route
+mongoose.connect(dbConfig.url).then((client)=>{
+    console.log("succes db connect")
+
+}).catch(err =>{
+
+    console.log(err)
+    console.log("erreur connect")
+    process.exit();
+})
+// async function main() {
+//     await mongoose.connect('mongodb://AdminSammy:GHT30k7!@localhost:27017/admin');
+// }
+
 
 const userRoutes =require('./src/routes/user.routes')
 const mangaRoutes =require('./src/routes/mangas.routes')

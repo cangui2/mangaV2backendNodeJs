@@ -3,6 +3,7 @@ require("dotenv").config();
 const bcrypt=require('bcryptjs')
 const csvtojson = require("csvtojson");
 const path = require("path");
+const fs = require("fs");
 // Retrieve and return all users from the database.
 exports.findAll = (req, res) => {
     Manga.find()
@@ -152,4 +153,24 @@ exports.import =(req,res) =>{
 
     });
 }
+exports.findForlder = (req, res) => {
+    console.log(req)
+    let element =req.params.name
+    console.log(element)
+    const dir=path.join(__dirname,'..',`../src/uploads/` +element)
+    // console.log(dir)
+    fs.readdir(dir, (err, files) => {
+        console.log(files.length);
+        if(files){
+            res.send(files)
+            //res.sendStatus(200);
+        }
+        if (err){
+            return res.sendStatus(400,{
+                message: "not allowed"
+            });
+        }
+
+    });
+};
 

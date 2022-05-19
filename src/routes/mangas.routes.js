@@ -16,6 +16,7 @@ router.put('/:id',mangaController.update);
 
 router.delete('/:id',mangaController.delete);
 router.get('/import/test',mangaController.import);
+router.get('/find/:name',mangaController.findForlder);
 
 
 
