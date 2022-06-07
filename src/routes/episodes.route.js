@@ -17,6 +17,7 @@ router.put('/:id',epsiodeController.update);
 router.delete('/:id',epsiodeController.delete);
 router.get('/image/:name/:episode/:number',epsiodeController.sendImage);
 router.get('/import/episode',epsiodeController.import)
+router.get('/test/julien',epsiodeController.test)
 
 
 

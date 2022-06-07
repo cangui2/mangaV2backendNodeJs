@@ -162,7 +162,29 @@ exports.sendImage = (req, res) => {
     let file=req.params.number
     let name=req.params.name
     let episode=req.params.episode
-    res.sendFile(path.join(__dirname, "../uploads/"+name+"/episode"+episode+"/"+file+".webp"));
+    let manga=['countrouble'];
+    let data=[];
+    let number =parseInt(file)-1;
+    let folder=path.join(__dirname, "../uploads/"+name+"/episode"+episode);
+    console.log(folder)
+    console.log(number)
+    if(manga.includes(name)){
+
+        fs.readdir(folder, (err, files) => {
+            files.forEach(file => {
+                data.push(file)
+            });
+            console.log(data[0]);
+            res.sendFile(path.join(__dirname, "../uploads/"+name+"/episode"+episode+"/"+data[number]));
+            console.log(data[0]);
+        });
+    }else {
+        res.sendFile(path.join(__dirname, "../uploads/"+name+"/episode"+episode+"/"+file+".webp"));
+    }
+
+
+
+
 };
 exports.import =(req,res) =>{
     const fileName = path.join(__dirname, "episode.csv");
@@ -195,6 +217,19 @@ exports.import =(req,res) =>{
 
 
     });
+}
+
+exports.test =(req,res)=>{
+    const testFolder = path.join(__dirname, "../uploads/countrouble/episode1/");
+    let data=[];
+    fs.readdir(testFolder, (err, files) => {
+        files.forEach(file => {
+
+            data.push(file)
+        });
+        console.log(data[0]);
+    });
+
 }
 
 

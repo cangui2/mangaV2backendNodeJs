@@ -7,6 +7,7 @@ const UserSchema = mongoose.Schema({
     phone:String,
     password: { type: String },
     token: { type: String },
+    age:String,
     is_active:{ type:Boolean,default:false},
     is_verified:{ type:Boolean,default:false},
     is_deleted:{ type:Boolean,default:false}

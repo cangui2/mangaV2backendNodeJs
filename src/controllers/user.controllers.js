@@ -15,6 +15,7 @@ exports.findAll = (req, res) => {
 };
 // Create and Save a new User
 exports.create = (req, res) => {
+    console.log(req)
 // Validate request
     if(!req.body) {
         return res.status(400).send({
@@ -26,8 +27,10 @@ exports.create = (req, res) => {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         email: req.body.email,
-        phone: req.body.phone
+        phone: req.body.phone,
+        age: req.body.age,
     });
+    console.log(user)
 // Save user in the database
     user.save()
         .then(data => {
@@ -120,7 +123,7 @@ exports.register = async (req, res) => {
     let encryptedPassword;
     try {
         // Get user input
-        const {first_name, last_name, email, password} = req.body;
+        const {first_name, last_name, email, password,age} = req.body;
 
         // Validate user input
         if (!(email && password && first_name && last_name)) {
@@ -144,6 +147,7 @@ exports.register = async (req, res) => {
             last_name,
             email: email.toLowerCase(), // sanitize: convert email to lowercase
             password: encryptedPassword,
+            age,
         });
 
         // Create token

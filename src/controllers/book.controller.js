@@ -1,4 +1,4 @@
-const Manga = require('../models/manga.model.js');
+const Book = require('../models/book.model.js');
 require("dotenv").config();
 const bcrypt=require('bcryptjs')
 const csvtojson = require("csvtojson");
@@ -6,27 +6,14 @@ const path = require("path");
 const fs = require("fs");
 // Retrieve and return all users from the database.
 exports.findAll = (req, res) => {
-
-    if(parseInt(req.params.age) >= 18){
-        Manga.find()
-            .then(mangas => {
-                res.send(mangas);
-            }).catch(err => {
-            res.status(500).send({
-                message: err.message || "Something went wrong while getting list of users."
-            });
+    Book.find()
+        .then(book => {
+            res.send(book);
+        }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Something went wrong while getting list of users."
         });
-    }else {
-        Manga.find({ age: { $lte: 17 } })
-            .then(mangas => {
-                res.send(mangas);
-            }).catch(err => {
-            res.status(500).send({
-                message: err.message || "Something went wrong while getting list of users."
-            });
-        });
-    }
-
+    });
 };
 // Create and Save a new User
 exports.create = (req, res) => {
@@ -37,7 +24,7 @@ exports.create = (req, res) => {
         });
     }
 // Create a new User
-    const manga = new Manga({
+    const book = new Book({
         name: req.body.name,
         type: req.body.type,
         image_url: req.body.image_url,
@@ -45,10 +32,9 @@ exports.create = (req, res) => {
         volume:req.body.volume,
         chapters:req.body.chapters,
         mal_id:req.body.mal_id,
-        age:req.body.age,
     });
 // Save user in the database
-    manga.save()
+    book.save()
         .then(data => {
             res.send(data);
         }).catch(err => {
@@ -59,7 +45,7 @@ exports.create = (req, res) => {
 };
 // Find a single User with a id
 exports.findOne = (req, res) => {
-    Manga.findById(req.params.id)
+    Book.findById(req.params.id)
         .then(user => {
             if(!user) {
                 return res.status(404).send({
@@ -87,7 +73,7 @@ exports.update = (req, res) => {
         });
     }
 // Find user and update it with the request body
-    Manga.findByIdAndUpdate(req.params.id, {
+    Book.findByIdAndUpdate(req.params.id, {
         name: req.body.name,
         type: req.body.type,
         image_url: req.body.image_url,
@@ -116,7 +102,7 @@ exports.update = (req, res) => {
 };
 // Delete a User with the specified id in the request
 exports.delete = (req, res) => {
-    Manga.findByIdAndRemove(req.params.id)
+    Book.findByIdAndRemove(req.params.id)
         .then(user => {
             if(!user) {
                 return res.status(404).send({
@@ -144,7 +130,7 @@ exports.import =(req,res) =>{
         for (var i = 0; i < source.length; i++) {
             console.log(source[i]);
             // break;
-            const manga = new Manga({
+            const manga = new Book({
                 name: source[i]["name"],
                 type: source[i]["type"],
                 image_url: source[i]["image_url"],
@@ -157,7 +143,7 @@ exports.import =(req,res) =>{
 
 
         }     //inserting into the table “employees”
-        Manga.insertMany(arrayToInsert, (err, result) => {
+        Book.insertMany(arrayToInsert, (err, result) => {
             if (err) console.log(err);
             if(result){
                 console.log("Import CSV into database successfully.");
@@ -187,4 +173,7 @@ exports.findForlder = (req, res) => {
 
     });
 };
-
+exports.sendEpub = (req, res) => {
+    let name=req.params.name
+    res.sendFile(path.join(__dirname, "../uploads/"+name+"/1.pdf"));
+};

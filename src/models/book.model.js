@@ -1,6 +1,6 @@
 const mongoose =require('mongoose')
 
-const MangaSchema =mongoose.Schema({
+const BookSchema =mongoose.Schema({
     name: String,
     type:String,
     image_url:String,
@@ -8,7 +8,6 @@ const MangaSchema =mongoose.Schema({
     volume:String,
     chapters:String,
     mal_id:String,
-    age:String,
     is_active:{ type:Boolean,default:false},
     is_download:{ type:Boolean,default:false},
     source:{type: mongoose.Schema.Types.ObjectId,ref:'Source'},
@@ -16,4 +15,4 @@ const MangaSchema =mongoose.Schema({
 },{
     timestamps: true,
 })
-module.exports =mongoose.model('Manga',MangaSchema)
+module.exports =mongoose.model('Book',BookSchema)

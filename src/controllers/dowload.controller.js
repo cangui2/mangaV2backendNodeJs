@@ -383,7 +383,7 @@ exports.remove = (req, res) => {
         while (currVal <= this.maxVal) yield currVal++;
     }
 
-    let obj = {minVal: 1, maxVal: 60},
+    let obj = {minVal: 1, maxVal: 200},
         arr;
     obj[Symbol.iterator] = sequenceGenerator;
     let data = [...obj];

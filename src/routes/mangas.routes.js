@@ -6,7 +6,7 @@ const mangaController =require('../controllers/manga.controller.js');
 
 
 
-router.get('/',mangaController.findAll);
+router.get('/lib/:age',mangaController.findAll);
 
 router.post('/',mangaController.create);
 
