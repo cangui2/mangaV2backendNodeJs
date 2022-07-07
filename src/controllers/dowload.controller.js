@@ -507,3 +507,10 @@ exports.checkIsExiste = async (req, res) => {
 
 
 }
+exports.downloadPdf =(req,res)=>{
+    let name=req.params.name
+    let folder=path.join(__dirname, "../uploads/"+name+"/");
+    var data =fs.readFileSync(folder+'1.pdf');
+    res.contentType("application/pdf");
+    res.send(data);
+}

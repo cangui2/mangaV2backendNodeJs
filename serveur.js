@@ -1,9 +1,11 @@
+
 const express =require('express');
 const bodyParser =require('body-parser');
-require("dotenv").config();
 const bcrypt=require('bcryptjs')
 const cors = require("cors");
 const fs = require('fs');
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, '.env') });
 var privateKey = fs.readFileSync( '/opt/tinycp/domains/serv.canguidev.fr/ssl/ssl-letsencrypt.key' );
 var certificate = fs.readFileSync( '/opt/tinycp/domains/serv.canguidev.fr/ssl/ssl-letsencrypt.crt' );
 //
@@ -63,7 +65,8 @@ mongoose.Promise=global.Promise;
 //     process.exit();
 // })
 async function main() {
-    await mongoose.connect('mongodb://AdminSammy:GHT30k7!@localhost:27017/admin');
+   // await mongoose.connect('mongodb://AdminSammy:GHT30k7!@localhost:27017/admin');
+    await mongoose.connect('mongodb://admin:password@localhost:27017/admin');
 }
 main().catch(err => console.log(err));
 // require route
@@ -139,4 +142,5 @@ app.get('/',(req,res) =>{
 
 app.listen(port,()=>{
     console.log(`node server is listening on port ${port}`);
+    console.log(process.env.TOKEN_KEY);
 });

@@ -162,13 +162,16 @@ exports.sendImage = (req, res) => {
     let file=req.params.number
     let name=req.params.name
     let episode=req.params.episode
-    let manga=['countrouble'];
+    let manga=['countrouble','city-hunter','gate-au-dela-de-la-porte','iruma-a-l-ecole-des-demons','one-piece','one-piece-door'
+    ,'one-piece-hs','one-piece-party','one-piece-wanted','platinum-end','the-rising-of-the-shield-hero','mortelle-adele',
+        'head-trick','fairy-tail','fairy-tail-100-years-quest','great-teacher-onizuka','gto-paradise-lost','yuna-de-la-pension-yuragi','fire-force','Goldorak','coq-de-combat'
+    ];
     let data=[];
     let number =parseInt(file)-1;
     let folder=path.join(__dirname, "../uploads/"+name+"/episode"+episode);
     console.log(folder)
     console.log(number)
-    if(manga.includes(name)){
+    //if(manga.includes(name)){
 
         fs.readdir(folder, (err, files) => {
             files.forEach(file => {
@@ -178,9 +181,11 @@ exports.sendImage = (req, res) => {
             res.sendFile(path.join(__dirname, "../uploads/"+name+"/episode"+episode+"/"+data[number]));
             console.log(data[0]);
         });
-    }else {
-        res.sendFile(path.join(__dirname, "../uploads/"+name+"/episode"+episode+"/"+file+".webp"));
-    }
+   // }
+    //else {
+
+     //   res.sendFile(path.join(__dirname, "../uploads/"+name+"/episode"+episode+"/"+file+".webp"));
+    //}
 
 
 

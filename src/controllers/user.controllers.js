@@ -186,6 +186,7 @@ exports.login =async (req, res) => {
         if (user && (await bcrypt.compare(password, user.password))) {
             // Create token
             console.log('token')
+            console.log(process.env.TOKEN_KEY)
             // save user token
             user.token = jwt.sign(
                 {user_id: user._id, email},
