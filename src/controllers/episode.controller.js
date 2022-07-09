@@ -167,6 +167,7 @@ exports.sendImage = (req, res) => {
         'head-trick','fairy-tail','fairy-tail-100-years-quest','great-teacher-onizuka','gto-paradise-lost','yuna-de-la-pension-yuragi','fire-force','Goldorak','coq-de-combat'
     ];
     let data=[];
+
     let number =parseInt(file)-1;
     let folder=path.join(__dirname, "../uploads/"+name+"/episode"+episode);
     console.log(folder)
@@ -176,10 +177,11 @@ exports.sendImage = (req, res) => {
         fs.readdir(folder, (err, files) => {
             files.forEach(file => {
                 data.push(file)
+                console.log(file);
             });
-            console.log(data[0]);
-            res.sendFile(path.join(__dirname, "../uploads/"+name+"/episode"+episode+"/"+data[number]));
-            console.log(data[0]);
+            let data2=data.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+            res.sendFile(path.join(__dirname, "../uploads/"+name+"/episode"+episode+"/"+data2[number]));
+            console.log(data2[number]);
         });
    // }
     //else {
