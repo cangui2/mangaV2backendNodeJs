@@ -1,7 +1,0 @@
-File from: [D:\dev\_Flutter\Losk ark serveur\src\uploads\/**/*.{jpg,JPG,jpeg,JPEG}]
-
-File to: [-]
-
-Compression algorithm: [-]
-
-Description:  Directory is empty!: 
