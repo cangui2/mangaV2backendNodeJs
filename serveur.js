@@ -6,8 +6,8 @@ const cors = require("cors");
 const fs = require('fs');
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, '.env') });
-var privateKey = fs.readFileSync( '/opt/tinycp/domains/serv.canguidev.fr/ssl/ssl-letsencrypt.key' );
-var certificate = fs.readFileSync( '/opt/tinycp/domains/serv.canguidev.fr/ssl/ssl-letsencrypt.crt' );
+var privateKey = fs.readFileSync( '/usr/local/hestia/data/users/cangui/ssl/serv.canguidev.fr.key' );
+var certificate = fs.readFileSync( '/usr/local/hestia/data/users/cangui/ssl/serv.canguidev.crt' );
 //
 //
 
@@ -65,8 +65,8 @@ mongoose.Promise=global.Promise;
 //     process.exit();
 // })
 async function main() {
-   // await mongoose.connect('mongodb://AdminSammy:GHT30k7!@localhost:27017/admin');
-    await mongoose.connect('mongodb://admin:password@localhost:27017/admin');
+    await mongoose.connect('mongodb://AdminSammy:GHT30k7!@localhost:27017/admin');
+    //await mongoose.connect('mongodb://admin:password@localhost:27017/admin');
 }
 main().catch(err => console.log(err));
 // require route

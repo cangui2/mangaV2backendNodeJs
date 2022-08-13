@@ -2,6 +2,7 @@ require("dotenv").config();
 const bcrypt = require('bcryptjs')
 const csvtojson = require("csvtojson");
 const path = require("path");
+const client = require('https');
 
 const urlExists = require('url-exists');
 const fs = require('fs');
@@ -12,6 +13,8 @@ const args = process.argv.slice(2);
 var compress_images = require('compress-images');
 
 const CloudflareBypasser = require('cloudflare-bypasser');
+const request = require('request');
+var requestCloudflare = require('request-cloudflare');
 let cf = new CloudflareBypasser();
 
 
@@ -33,7 +36,7 @@ exports.download = async (req, res) => {
     }
 
 
-    for (let i = 1; i < 54; i++) {
+    for (let i = 1; i < 30; i++) {
         let data = [];
         if (episode <= 9) {
             data = [
@@ -53,18 +56,18 @@ exports.download = async (req, res) => {
                 'https://scansmangas.ws/scans/' + manga + '/' + episode + 'vf/00' + i + '.jpg',
                 'https://scansmangas.ws/scans/' + manga + '/' + episode + 'vf/0' + i + '.png',
                 'https://scansmangas.ws/scans/' + manga + '/' + episode + 'vf/0' + i + '.jpg',
-                //'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/0' + i + '.png',
-                //'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/0' + i + '.jpg',
-                //'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/' + i + '.png',
-                //'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/' + i + '.jpg',
-                //'https://frscan.ws/uploads/manga/' + manga + '/chapters/000' + episode + '/0' + i + '.png',
-                //'https://frscan.ws/uploads/manga/' + manga + '/chapters/000' + episode + '/0' + i + '.jpg',
-                //'https://frscan.ws/uploads/manga/' + manga + '/chapters/000' + episode + '/00' + i + '.png',
-                //'https://frscan.ws/uploads/manga/' + manga + '/chapters/000' + episode + '/00' + i + '.jpg',
-                //'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + 'vf/00' + i + '.png',
-                //'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + 'vf/00' + i + '.jpg',
-                //'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + 'vf/0' + i + '.png',
-                //'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + 'vf/0' + i + '.jpg',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/0' + i + '.png',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/0' + i + '.jpg',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/' + i + '.png',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/' + i + '.jpg',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/000' + episode + '/0' + i + '.png',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/000' + episode + '/0' + i + '.jpg',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/000' + episode + '/00' + i + '.png',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/000' + episode + '/00' + i + '.jpg',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + 'vf/00' + i + '.png',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + 'vf/00' + i + '.jpg',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + 'vf/0' + i + '.png',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + 'vf/0' + i + '.jpg',
             ]
         }
         if (episode >= 10 && episode <= 99) {
@@ -86,7 +89,7 @@ exports.download = async (req, res) => {
                 'https://scansmangas.ws/scans/' + manga + '/' + episode + 'vf/0' + i + '.png',
                 'https://scansmangas.ws/scans/' + manga + '/' + episode + 'vf/0' + i + '.jpg',
                 // 'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/' + i + '.png',
-                //'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/' + i + '.jpg',
+                // 'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/' + i + '.jpg',
                 // 'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/0' + i + '.png',
                 // 'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/0' + i + '.jpg',
                 // 'https://frscan.ws/uploads/manga/' + manga + '/chapters/00' + episode + '/0' + i + '.png',
@@ -101,7 +104,7 @@ exports.download = async (req, res) => {
         }
         if (episode >= 100) {
             data = [
-                //'https://scansmangas.ws/scans/' + manga + '/' + episode + '/' + i + '.jpg'
+                'https://scansmangas.ws/scans/' + manga + '/' + episode + '/' + i + '.jpg',
                 'https://scansmangas.ws/scans/' + manga + '/0' + i + '.png',
                 'https://scansmangas.ws/scans/' + manga + '/0' + i + '.jpg',
                 'https://scansmangas.ws/scans/' + manga + '/' + i + '.png',
@@ -118,18 +121,18 @@ exports.download = async (req, res) => {
                 'https://scansmangas.ws/scans/' + manga + '/' + episode + 'vf/00' + i + '.jpg',
                 'https://scansmangas.ws/scans/' + manga + '/' + episode + 'vf/0' + i + '.png',
                 'https://scansmangas.ws/scans/' + manga + '/' + episode + 'vf/0' + i + '.jpg',
-                // 'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/' + i + '.png',
-                //'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/' + i + '.jpg',
-                // 'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/0' + i + '.png',
-               // 'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/0' + i + '.jpg',
-                // 'https://frscan.ws/uploads/manga/' + manga + '/chapters/0' + episode + '/0' + i + '.png',
-                // 'https://frscan.ws/uploads/manga/' + manga + '/chapters/0' + episode + '/0' + i + '.jpg',
-                // 'https://frscan.ws/uploads/manga/' + manga + '/chapters/0' + episode + '/00' + i + '.png',
-                // 'https://frscan.ws/uploads/manga/' + manga + '/chapters/0' + episode + '/00' + i + '.jpg',
-                // 'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + 'vf/00' + i + '.png',
-                // 'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + 'vf/00' + i + '.jpg',
-                // 'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + 'vf/0' + i + '.png',
-                // 'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + 'vf/0' + i + '.jpg',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/' + i + '.png',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/' + i + '.jpg',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/0' + i + '.png',
+               'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + '/0' + i + '.jpg',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/0' + episode + '/0' + i + '.png',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/0' + episode + '/0' + i + '.jpg',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/0' + episode + '/00' + i + '.png',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/0' + episode + '/00' + i + '.jpg',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + 'vf/00' + i + '.png',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + 'vf/00' + i + '.jpg',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + 'vf/0' + i + '.png',
+                'https://frscan.ws/uploads/manga/' + manga + '/chapters/' + episode + 'vf/0' + i + '.jpg',
 
             ]
         }
@@ -137,52 +140,72 @@ exports.download = async (req, res) => {
         function sleep (time) {
             return new Promise((resolve) => setTimeout(resolve, time));
         }
+        function downloadImage(url, filepath) {
+            return new Promise((resolve, reject) => {
+                client.get(url, (res) => {
+                    if (res.statusCode === 200) {
+                        res.pipe(fs.createWriteStream(filepath))
+                            .on('error', reject)
+                            .once('close', () => resolve(filepath));
+                    } else {
+                        // Consume response data to free up memory
+                        res.resume();
+                        reject(new Error(`Request Failed With a Status Code: ${res.statusCode}`));
 
+                    }
+                });
+            });
+        }
+
+        const paths = path.join(__dirname, '..', `../src/uploads/` + manga + `/episode` + episode + `/` + i + `.jpg`);
         data.forEach(element =>
 
-                https.get(element, (res) => {
-                    // Image will be stored at this path
-                    console.log(res.statusCode)
-                    console.log(element)
-                    if (res.statusCode === 200) {
-                        const paths = path.join(__dirname, '..', `../src/uploads/` + manga + `/episode` + episode + `/` + i + `.jpg`);
-                        const filePath = fs.createWriteStream(paths);
-                        res.pipe(filePath);
-                        filePath.on('finish', () => {
-                            filePath.close();
-                            console.log('Download Completed');
-
-                        })
-                    }
-
-                })
+            // downloadImage(element, paths)
+            //     .then(console.log)
+            //     .catch(console.error)
+                // https.get(element, (res) => {
+                //     // Image will be stored at this path
+                //     console.log(res.statusCode)
+                //     console.log(element)
+                //      if (res.statusCode === 200) {
+                //         const paths = path.join(__dirname, '..', `../src/uploads/` + manga + `/episode` + episode + `/` + i + `.jpg`);
+                //         const filePath = fs.createWriteStream(paths);
+                //         res.pipe(filePath);
+                //         filePath.on('finish', () => {
+                //             filePath.close();
+                //             console.log('Download Completed');
+                //
+                //         })
+                //     }
+                //
+                // })
 
 
 
 
             // console.log(element)
-            // setTimeout(function () {
-            //     urlExists(element, function (err, exists) {
-            //         console.log(element)
-            //         console.log(err)
-            //         if (exists) {
-            //             https.get(element, (res) => {
-            //                 // Image will be stored at this path
-            //                 //console.log(res)
-            //                 const paths = path.join(__dirname, '..', `../src/uploads/` + manga + `/episode` + episode + `/` + i + `.jpg`);
-            //                 const filePath = fs.createWriteStream(paths);
-            //                 res.pipe(filePath);
-            //                 filePath.on('finish', () => {
-            //                     filePath.close();
-            //                     console.log('Download Completed');
-            //
-            //                 })
-            //             })
-            //
-            //         }
-            //
-            //     })
-            // }, 20000),
+            setTimeout(function () {
+                urlExists(element, function (err, exists) {
+                    console.log(element)
+                    console.log(exists)
+                    if (exists) {
+                        https.get(element, (res) => {
+                            // Image will be stored at this path
+                            //console.log(res)
+                            const paths = path.join(__dirname, '..', `../src/uploads/` + manga + `/episode` + episode + `/` + i + `.jpg`);
+                            const filePath = fs.createWriteStream(paths);
+                            res.pipe(filePath);
+                            filePath.on('finish', () => {
+                                filePath.close();
+                                console.log('Download Completed');
+
+                            })
+                        })
+
+                    }
+
+                })
+            }, 20000),
 
 
         )
