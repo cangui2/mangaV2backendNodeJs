@@ -171,7 +171,7 @@ exports.findForlder = (req, res) => {
     console.log(req)
     let element =req.params.name
     console.log(element)
-    const dir=path.join(__dirname,'..',`../src/uploads/` +element)
+    const dir=path.join(__dirname,'..',`../src/uploads/manga/` +element)
     // console.log(dir)
     fs.readdir(dir, (err, files) => {
         console.log(files.length);

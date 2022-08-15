@@ -157,7 +157,7 @@ exports.findForlder = (req, res) => {
     console.log(req)
     let element =req.params.name
     console.log(element)
-    const dir=path.join(__dirname,'..',`../src/uploads/` +element)
+    const dir=path.join(__dirname,'..',`../src/uploads/book` +element)
     // console.log(dir)
     fs.readdir(dir, (err, files) => {
         console.log(files.length);
@@ -175,5 +175,5 @@ exports.findForlder = (req, res) => {
 };
 exports.sendEpub = (req, res) => {
     let name=req.params.name
-    res.sendFile(path.join(__dirname, "../uploads/"+name+"/1.pdf"));
+    res.sendFile(path.join(__dirname, "../uploads/book/"+name+"/1.pdf"));
 };

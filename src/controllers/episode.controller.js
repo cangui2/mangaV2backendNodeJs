@@ -169,7 +169,7 @@ exports.sendImage = (req, res) => {
     let data=[];
 
     let number =parseInt(file)-1;
-    let folder=path.join(__dirname, "../uploads/"+name+"/episode"+episode);
+    let folder=path.join(__dirname, "../uploads/manga/"+name+"/episode"+episode);
     console.log(folder)
     console.log(number)
     //if(manga.includes(name)){
@@ -180,7 +180,7 @@ exports.sendImage = (req, res) => {
                 console.log(file);
             });
             let data2=data.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
-            res.sendFile(path.join(__dirname, "../uploads/"+name+"/episode"+episode+"/"+data2[number]));
+            res.sendFile(path.join(__dirname, "../uploads/manga/"+name+"/episode"+episode+"/"+data2[number]));
             console.log(data2[number]);
         });
    // }
