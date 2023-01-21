@@ -1,18 +1,20 @@
 
 const express =require('express');
 const bodyParser =require('body-parser');
+const childProcess = require('child_process');
+const CircularJSON = require('circular-json');
 const bcrypt=require('bcryptjs')
 const cors = require("cors");
 const fs = require('fs');
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, '.env') });
-var privateKey = fs.readFileSync( '/usr/local/hestia/data/users/cangui/ssl/serv.canguidev.fr.key' );
-var certificate = fs.readFileSync( '/usr/local/hestia/data/users/cangui/ssl/serv.canguidev.fr.crt' );
-//
-//
+// var privateKey = fs.readFileSync( '/usr/local/hestia/data/users/admin/ssl/serv.canguidev.fr.key' );
+// var certificate = fs.readFileSync( '/usr/local/hestia/data/users/admin/ssl/serv.canguidev.fr.crt' );
+// //
+// //
 
 
-var credentials = {key: privateKey, cert: certificate};
+// var credentials = {key: privateKey, cert: certificate};
 
 
 
@@ -20,8 +22,8 @@ var credentials = {key: privateKey, cert: certificate};
 
 // creation de express app
 
-//const app = express();
-const app = express(credentials);
+const app = express();
+//const app = express(credentials);
 app.use(cors());
 // setup des port
 
@@ -57,6 +59,45 @@ mongoose.Promise=global.Promise;
 
 // connect database
 
+mongoose.connect('mongodb://localhost:27017/node-expres-api', { useNewUrlParser: true, useUnifiedTopology: true });
+
+const db = mongoose.connection;
+  // Create a version file every time the database is updated
+  db.on('open', () => {
+    if (!fs.existsSync('versionDb.txt')) {
+        fs.writeFileSync('versionDb.txt', JSON.stringify(new Date()));
+    } else {
+        fs.appendFileSync('versionDb.txt', JSON.stringify(new Date()));
+    }
+  });
+
+  // Route to send the entire database
+  app.get('/api/db', (req, res) => {
+    const dumpPath = path.join(__dirname, 'dump');
+    const dumpFile = path.join(dumpPath, 'node-expres-api.gz');
+    const cmd = `mongodump --host localhost --port 27017 --db node-expres-api --gzip --archive=${dumpFile}`;
+
+    childProcess.exec(cmd, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`exec error: ${error}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+        console.log(`stderr: ${stderr}`);
+        res.download(dumpFile, 'database.gz', (err) => {
+            if (err) throw err;
+            fs.unlinkSync(dumpFile);
+            fs.rmdirSync(dumpPath);
+        });
+    });
+});
+  // Route to send the version file
+  app.get('/api/version', (req, res) => {
+    res.sendFile(__dirname + '/versionDb.txt');
+  });
+
+
+
 // mongoose.connect(dbConfig.url).then((client)=>{
 //     console.log("succes db connect")
 //
@@ -66,18 +107,29 @@ mongoose.Promise=global.Promise;
 // })
 async function main() {
     //await mongoose.connect('mongodb://AdminSammy:GHT30k7!@localhost:27017/admin');
-    await mongoose.connect('mongodb://admin:password@localhost:27017/admin');
+    //await mongoose.connect('mongodb://cangui:Canguilieme1@localhost:27017/admin');
+   // await mongoose.connect('mongodb://localhost:27017/node-expres-api')
 }
-main().catch(err => console.log(err));
+main()
+.then((client)=>{
+        console.log("succes db connect")
+    })
+.catch(err => console.log(err));
 // require route
+
 
 const userRoutes =require('./src/routes/user.routes')
 const mangaRoutes =require('./src/routes/mangas.routes')
 const episodeRoutes =require('./src/routes/episodes.route')
 const downloadRoutes =require('./src/routes/download.route')
 const bookRoutes =require('./src/routes/book.routes')
+const magazineRoutes =require('./src/routes/magazine.routes')
 const jwt = require("jsonwebtoken");
 const User = require("./src/models/user.model");
+const documentRoute =require('./src/routes/document.routes')
+const linksRoute =require('./src/routes/links.routes')
+const categoriesRoutes =require('./src/routes/categories.routes')
+const urlsRoutes =require('./src/routes/urls.routes')
 
 
 app.use('/api/users',userRoutes)
@@ -85,57 +137,11 @@ app.use('/api/manga',mangaRoutes)
 app.use('/api/episode',episodeRoutes)
 app.use('/api/download',downloadRoutes)
 app.use('/api/book',bookRoutes)
-// app.post("/register", async (req, res) => {
-//
-//     // Our register logic starts here
-//     let encryptedPassword;
-//     try {
-//         // Get user input
-//         const {first_name, last_name, email, password} = req.body;
-//
-//         // Validate user input
-//         if (!(email && password && first_name && last_name)) {
-//             res.status(400).send("All input is required");
-//         }
-//
-//         // check if user already exist
-//         // Validate if user exist in our database
-//         const oldUser = await User.findOne({email});
-//
-//         if (oldUser) {
-//             return res.status(409).send("User Already Exist. Please Login");
-//         }
-//
-//         //Encrypt user password
-//         encryptedPassword = await bcrypt.hash(password, 10);
-//
-//         // Create user in our database
-//         const user = await User.create({
-//             first_name,
-//             last_name,
-//             email: email.toLowerCase(), // sanitize: convert email to lowercase
-//             password: encryptedPassword,
-//         });
-//
-//         // Create token
-//         // save user token
-//         console.log(process.env.TOKEN_KEY)
-//         user.token = jwt.sign(
-//             {user_id: user._id, email},
-//             process.env.TOKEN_KEY,
-//             {
-//                 expiresIn: "2h",
-//             }
-//         );
-//
-//         // return new user
-//         res.status(201).json(user);
-//     } catch (err) {
-//         console.log(err);
-//     }
-//     // Our register logic ends here
-// });
-
+app.use('/api/magazine',magazineRoutes)
+app.use('/api/document',documentRoute)
+app.use('/api/link',linksRoute)
+app.use('/api/categories',categoriesRoutes)
+app.use('/api/url',urlsRoutes)
 app.get('/',(req,res) =>{
     res.json({"message":"hello world"});
 } );
